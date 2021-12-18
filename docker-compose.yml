@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  util:
+    # will build ./docker/web/Dockerfile
+    build: 
+      context: .
+      dockerfile: ./docker/prod/Dockerfile
+    image: util/prod
+  tests:
+    # will build ./docker/web/Dockerfile
+    build: 
+      context: .
+      dockerfile: ./docker/tests/Dockerfile
+    image: util/tests

@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "==2.25"
+typer = "==0.3.2"
+tabulate = "==0.8.9"
+PyYAML = "==5.4.1"
+prettyprinter = "*"
+pytest = "*"
+[dev-packages]
+isort = "*"
+black = "==21.5b1"
+flake8 = "*"
+autoflake = "*"
+vulture = "*"
+mypy = "*"
+pydantic = "*"
+
+[requires]
+python_version = "3.7"
