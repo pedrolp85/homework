@@ -72,55 +72,7 @@ def log_parser(
         log_parser = get_log_parser("stdin")
         lines = log_parser.get_lines(file)
 
-    if first:
-
-        head_result = log_parser.get_head(lines, first)
-
-        common_elements = head_result
-    if last:
-
-        tail_result = log_parser.get_tail(lines, last)
-
-        if "common_elements" in vars():
-
-            common_elements = list(set(common_elements).intersection(set(tail_result)))
-
-        else:
-            common_elements = tail_result
-
-    if timestamps:
-
-        timestamp_result = log_parser.get_timestamp(lines, timestamps)
-
-        if "common_elements" in vars():
-
-            common_elements = list(
-                set(common_elements).intersection(set(timestamp_result))
-            )
-
-        else:
-            common_elements = timestamp_result
-
-    if ipv4:
-        ipv4_result = log_parser.get_ipv4(lines, ipv4)
-
-        if "common_elements" in vars():
-
-            common_elements = list(set(common_elements).intersection(set(ipv4_result)))
-
-        else:
-            common_elements = ipv4_result
-
-    if ipv6:
-        ipv6_result = log_parser.get_ipv6(lines, ipv6)
-
-        if "common_elements" in vars():
-
-            common_elements = list(set(common_elements).intersection(set(ipv6_result)))
-
-        else:
-            common_elements = ipv6_result
-
+    common_elements = log_parser.get_result(lines, first, last, timestamps, ipv4, ipv6)
     printer = get_print_output()
 
     for element in common_elements:
