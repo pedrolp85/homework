@@ -37,6 +37,12 @@ class LogParser(metaclass=ABCMeta):
         self, lines: List[str], ipv6: ipaddress.IPv6Address
     ) -> List[str]:
         pass
+    
+    @abstractmethod
+    def get_ipv4_enhanced(
+            self, lines: List[str], ipv4: ipaddress.IPv4Address
+        ) -> List[str]:
+        pass
 
     @abstractmethod
     def get_result(
@@ -59,7 +65,8 @@ class LogParserMock(LogParser):
             "13:13:13 Log file timestamp",
             "172.16.0.14 ipv4 log file entry",
             "2001:DB8::1 ipv6 log file entry",
-            "::8 iv6 too compressed file entry",
+            "::8 ipv6 too compressed file entry",
+            "172.16.0.140 ipv4 regex superposition"
         ]
 
     def get_head(self, lines: List[str], num_lines: Optional[int]) -> List[str]:
@@ -82,6 +89,11 @@ class LogParserMock(LogParser):
     ) -> List[str]:
         return ["::8 iv6 too compressed file entry"]
 
+    def get_ipv4_enhanced(
+            self, lines: List[str], ipv4: ipaddress.IPv4Address
+        ) -> List[str]:
+        return ["172.16.0.14 ipv4 log file entry"]
+
     def get_result(
         self,
         lines: List[str],
@@ -103,7 +115,10 @@ class LogParserUtils(LogParser):
 
     def get_tail(self, lines: List[str], num_lines: int) -> List[str]:
         # print(f"lets make a tail oper with {num_lines} lines")
-        max_lines = num_lines if (num_lines < (len(lines))) else (len(lines))
+        if num_lines ==0:
+            max_lines = -len(lines)
+        else:
+            max_lines = num_lines if (num_lines < (len(lines))) else (len(lines))
         lines_filtered = lines[-(max_lines):]
         return lines_filtered
 
@@ -121,6 +136,23 @@ class LogParserUtils(LogParser):
         lines_filtered = [line for line in lines if re.search(regexp, line)]
         return lines_filtered
 
+    def get_ipv4_enhanced(
+        self, lines: List[str], ipv4: ipaddress.IPv4Address
+    ) -> List[str]:
+        lines_filtered = []
+        for line in lines:
+            words = line.split()
+            for word in words:
+                try:
+                    ip_address = ipaddress.IPv4Address(word)
+                    if ip_address == ipv4:
+                        lines_filtered.append(line)
+                        break
+                except ValueError:
+                    continue
+        return lines_filtered    
+    
+    
     def get_ipv6(self, lines: List[str], ipv6: ipaddress.IPv6Address) -> List[str]:
         # print(f"lets grep with {ipv6} regex")
         regexp = str(ipv6)
@@ -171,16 +203,31 @@ class LogParserUtils(LogParser):
                 and not timestamp
                 and not ipv4
                 and not ipv6
+                and head_num_lines != 0
+                and tail_num_lines != 0
             )
             else False
         )
 
+        if head_num_lines is not None and head_num_lines <0:
+            if tail_num_lines is not None and tail_num_lines <0:
+                tmp = head_num_lines
+                head_num_lines = abs(tail_num_lines)
+                tail_num_lines = abs(tmp)
+            else:
+                tail_num_lines = abs(head_num_lines)
+                head_num_lines = None
+        
+        if tail_num_lines is not None and tail_num_lines <0:       
+            head_num_lines = abs(tail_num_lines)
+            tail_num_lines = None           
+        
         if no_options:
             common_lines = lines
-        if head_num_lines:
+        if head_num_lines is not None:
             head_lines = self.get_head(lines, head_num_lines)
             common_lines = head_lines
-        if tail_num_lines:
+        if tail_num_lines is not None:
             tail_lines = self.get_tail(lines, tail_num_lines)
             if "common_lines" in vars():
                 common_lines = self._intersect_results(tail_lines, common_lines)
@@ -193,7 +240,7 @@ class LogParserUtils(LogParser):
             else:
                 common_lines = timestamp_lines
         if ipv4:
-            ipv4_lines = self.get_ipv4(lines, ipv4)
+            ipv4_lines = self.get_ipv4_enhanced(lines, ipv4)
             if "common_lines" in vars():
                 common_lines = self._intersect_results(ipv4_lines, common_lines)
             else:

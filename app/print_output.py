@@ -39,7 +39,15 @@ class PrintOutputStdout(PrintOutput):
 
     def print_output_to_stdout(self, line, ipv4: Any, ipv6: Any) -> None:
         if ipv4:
-            line = self._replace_ipv4_ansi_highlight(line, ipv4)
+            words = line.split()
+            for word in words:
+                try:
+                    ip_address = ipaddress.IPv4Address(word)
+                    if ip_address == ipv4:
+                        line = self._replace_ipv4_ansi_highlight(line, word)
+                except ValueError:
+                    continue
+        
         if ipv6:
             words = line.split()
             for word in words:
