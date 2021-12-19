@@ -1,5 +1,4 @@
 import ipaddress
-import os
 import re
 import sys
 from abc import ABCMeta, abstractmethod
@@ -256,12 +255,13 @@ class LogParserUtils(LogParser):
 
 
 class LogParserFromFile(LogParserUtils):
-    def get_lines(self, file_name: Optional[str]) -> List[str]:
-
+    def get_lines(self, file_name: Optional[str]) -> Any:
+        try:
+            f = open(file_name, "r")
+        except PermissionError:
+            return None
         # print(f"taking lines from file Argument {file_name}")
-        dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, file_name)
-        f = open(filename, "r")
+        
         lines = [line.strip() for line in f]
         f.close()
 

@@ -3,7 +3,7 @@ import re
 from abc import ABCMeta, abstractmethod
 from typing import Any, Optional
 
-from constants import HIGHLIGHT_OPTIONS
+from logparser.constants import HIGHLIGHT_OPTIONS
 
 
 class PrintOutput(metaclass=ABCMeta):

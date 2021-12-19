@@ -2,12 +2,26 @@
 import ipaddress
 from datetime import datetime
 from typing import Optional
+import os
 
 import typer
-from log_parser import get_log_parser
-from print_output import get_print_output
+from logparser.logparsercli import get_log_parser
+from output.printoutput import get_print_output
 
 app = typer.Typer()
+
+def validate_file(file: str) -> str:
+
+    if not os.path.isabs(file):
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, file)
+    else:
+        filename = file
+    if os.path.isfile(filename):
+        return filename
+    else:
+        typer.echo("The File provided does not exist")
+        raise typer.Exit(code=2)
 
 
 def validate_ipv6address(ip: str) -> ipaddress.IPv6Address :
@@ -81,10 +95,13 @@ def log_parser(
 ) -> None:
 
     if file:
-
+     
         log_parser = get_log_parser("file")
-        lines = log_parser.get_lines(file)
-
+        filename = validate_file(file)
+        lines = log_parser.get_lines(filename)
+        if not lines:
+            typer.echo("Permission denied to operate the file")
+            raise typer.Exit(code=2)
     else:
 
         log_parser = get_log_parser("stdin")
