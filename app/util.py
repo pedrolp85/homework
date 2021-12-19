@@ -1,14 +1,15 @@
 #! /usr/local/bin/python3.7
 import ipaddress
+import os
 from datetime import datetime
 from typing import Optional
-import os
 
 import typer
 from logparser.logparsercli import get_log_parser
 from output.printoutput import get_print_output
 
 app = typer.Typer()
+
 
 def validate_file(file: str) -> str:
 
@@ -24,46 +25,37 @@ def validate_file(file: str) -> str:
         raise typer.Exit(code=2)
 
 
-def validate_ipv6address(ip: str) -> ipaddress.IPv6Address :
+def validate_ipv6address(ip: str) -> ipaddress.IPv6Address:
     if ip is not None:
         try:
             ip_address = ipaddress.IPv6Address(ip)
         except ValueError:
-            raise typer.BadParameter(
-                "Only valid IPv6 addresess"
-            )
+            raise typer.BadParameter("Only valid IPv6 addresess")
 
         return ip_address
 
 
-def validate_ipv4address(ip: str) -> ipaddress.IPv4Address :
+def validate_ipv4address(ip: str) -> ipaddress.IPv4Address:
     if ip is not None:
         try:
             ip_address = ipaddress.IPv4Address(ip)
         except ValueError:
-            raise typer.BadParameter(
-                "Only valid IPv4 addresess accepted"
-            )
+            raise typer.BadParameter("Only valid IPv4 addresess accepted")
 
         return ip_address
+
 
 def validate_datetime(timestamp: str) -> datetime:
     if timestamp is not None:
         try:
-            time_object = datetime.strptime(timestamp, '%H:%M:%S')
-            timestr = time_object.strftime('%H:%M:%S')
+            time_object = datetime.strptime(timestamp, "%H:%M:%S")
+            timestr = time_object.strftime("%H:%M:%S")
         except ValueError:
-            raise typer.BadParameter(
-                "Timestamp provided is not valid"
-            )                  
+            raise typer.BadParameter("Timestamp provided is not valid")
         if timestr == timestamp:
             return time_object
         else:
-            raise typer.BadParameter(
-                "Timestamp provided is not zero padded "
-            )            
-       
-
+            raise typer.BadParameter("Timestamp provided is not zero padded ")
 
 
 @app.command()
@@ -95,7 +87,7 @@ def log_parser(
 ) -> None:
 
     if file:
-     
+
         log_parser = get_log_parser("file")
         filename = validate_file(file)
         lines = log_parser.get_lines(filename)

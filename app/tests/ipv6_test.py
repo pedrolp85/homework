@@ -3,6 +3,7 @@ from util import app
 
 runner = CliRunner()
 
+
 def test_valid_ipv6_1():
     result = runner.invoke(
         app, ["tests/test_files/ipv6.log", "--ipv6", "1:2:3:4:5:6:7:8"]
@@ -88,17 +89,24 @@ def test_valid_ipv6_13():
     print(result.stdout)
     assert "::" in result.stdout
 
+
 def test_valid_ipv6_14():
-    result = runner.invoke(app, ["tests/test_files/ipv6.log", "--ipv6", "1::3:4:5:6:7:8"])
+    result = runner.invoke(
+        app, ["tests/test_files/ipv6.log", "--ipv6", "1::3:4:5:6:7:8"]
+    )
     assert result.exit_code == 0
     print(result.stdout)
     assert "1::3:4:5:6:7:8" in result.stdout
 
+
 def test_valid_ipv6_15():
-    result = runner.invoke(app, ["tests/test_files/ipv6.log", "--ipv6", "1:2:3:4:5:6:7::"])
+    result = runner.invoke(
+        app, ["tests/test_files/ipv6.log", "--ipv6", "1:2:3:4:5:6:7::"]
+    )
     assert result.exit_code == 0
     print(result.stdout)
     assert "1:2:3:4:5:6:7::" in result.stdout
+
 
 def test_valid_ipv6_16():
     result = runner.invoke(app, ["tests/test_files/ipv6.log", "--ipv6", "1:2:3:4:5::8"])
@@ -113,14 +121,20 @@ def test_invalid_ipv6_1():
     print(result.stdout)
     assert "Error: Invalid value" in result.stdout
 
+
 def test_invalid_ipv6_2():
-    result = runner.invoke(app, ["tests/test_files/ipv6.log", "--ipv6", "fe80:2030:31:24"])
+    result = runner.invoke(
+        app, ["tests/test_files/ipv6.log", "--ipv6", "fe80:2030:31:24"]
+    )
     assert result.exit_code == 2
     print(result.stdout)
     assert "Error: Invalid value" in result.stdout
 
+
 def test_several_representations_ipv6_1():
-    result = runner.invoke(app, ["tests/test_files/ipv6.log", "--ipv6", "2001:db8:0:0:0::1"])
+    result = runner.invoke(
+        app, ["tests/test_files/ipv6.log", "--ipv6", "2001:db8:0:0:0::1"]
+    )
     assert result.exit_code == 0
     print(result.stdout)
     assert "2001:db8:0:0:0::1" in result.stdout
@@ -128,12 +142,9 @@ def test_several_representations_ipv6_1():
     assert "2001:db8:0::1" in result.stdout
     assert "2001:db8::1" in result.stdout
 
+
 def test_valid_ipv6_duplicated_in_line():
     result = runner.invoke(app, ["tests/test_files/ipv6.log", "--ipv6", "1:2:3:4:5::8"])
     assert result.exit_code == 0
     print(result.stdout)
     assert "1:2:3:4:5::8" in result.stdout
-
-
-
-

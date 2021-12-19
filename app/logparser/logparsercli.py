@@ -36,11 +36,11 @@ class LogParser(metaclass=ABCMeta):
         self, lines: List[str], ipv6: ipaddress.IPv6Address
     ) -> List[str]:
         pass
-    
+
     @abstractmethod
     def get_ipv4_enhanced(
-            self, lines: List[str], ipv4: ipaddress.IPv4Address
-        ) -> List[str]:
+        self, lines: List[str], ipv4: ipaddress.IPv4Address
+    ) -> List[str]:
         pass
 
     @abstractmethod
@@ -65,7 +65,7 @@ class LogParserMock(LogParser):
             "172.16.0.14 ipv4 log file entry",
             "2001:DB8::1 ipv6 log file entry",
             "::8 ipv6 too compressed file entry",
-            "172.16.0.140 ipv4 regex superposition"
+            "172.16.0.140 ipv4 regex superposition",
         ]
 
     def get_head(self, lines: List[str], num_lines: Optional[int]) -> List[str]:
@@ -89,8 +89,8 @@ class LogParserMock(LogParser):
         return ["::8 iv6 too compressed file entry"]
 
     def get_ipv4_enhanced(
-            self, lines: List[str], ipv4: ipaddress.IPv4Address
-        ) -> List[str]:
+        self, lines: List[str], ipv4: ipaddress.IPv4Address
+    ) -> List[str]:
         return ["172.16.0.14 ipv4 log file entry"]
 
     def get_result(
@@ -114,7 +114,7 @@ class LogParserUtils(LogParser):
 
     def get_tail(self, lines: List[str], num_lines: int) -> List[str]:
         # print(f"lets make a tail oper with {num_lines} lines")
-        if num_lines ==0:
+        if num_lines == 0:
             max_lines = -len(lines)
         else:
             max_lines = num_lines if (num_lines < (len(lines))) else (len(lines))
@@ -149,9 +149,8 @@ class LogParserUtils(LogParser):
                         break
                 except ValueError:
                     continue
-        return lines_filtered    
-    
-    
+        return lines_filtered
+
     def get_ipv6(self, lines: List[str], ipv6: ipaddress.IPv6Address) -> List[str]:
         # print(f"lets grep with {ipv6} regex")
         regexp = str(ipv6)
@@ -208,19 +207,19 @@ class LogParserUtils(LogParser):
             else False
         )
 
-        if head_num_lines is not None and head_num_lines <0:
-            if tail_num_lines is not None and tail_num_lines <0:
+        if head_num_lines is not None and head_num_lines < 0:
+            if tail_num_lines is not None and tail_num_lines < 0:
                 tmp = head_num_lines
                 head_num_lines = abs(tail_num_lines)
                 tail_num_lines = abs(tmp)
             else:
                 tail_num_lines = abs(head_num_lines)
                 head_num_lines = None
-        
-        if tail_num_lines is not None and tail_num_lines <0:       
+
+        if tail_num_lines is not None and tail_num_lines < 0:
             head_num_lines = abs(tail_num_lines)
-            tail_num_lines = None           
-        
+            tail_num_lines = None
+
         if no_options:
             common_lines = lines
         if head_num_lines is not None:
@@ -261,7 +260,7 @@ class LogParserFromFile(LogParserUtils):
         except PermissionError:
             return None
         # print(f"taking lines from file Argument {file_name}")
-        
+
         lines = [line.strip() for line in f]
         f.close()
 

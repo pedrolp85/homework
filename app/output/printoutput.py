@@ -47,7 +47,7 @@ class PrintOutputStdout(PrintOutput):
                         line = self._replace_ipv4_ansi_highlight(line, word)
                 except ValueError:
                     continue
-        
+
         if ipv6:
             words = line.split()
             for word in words:
