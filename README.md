@@ -1,6 +1,7 @@
 # RHEL homework
 
 This Repository contains a Python app that satisfies the following requirements:
+The solution relies on Typer, the FastAPI of Cli's
 
 Interview app - log parsing utility v1.02:
 -----------------------------------------------------------------------------------
