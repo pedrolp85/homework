@@ -91,7 +91,7 @@ docker-compose build tests
 ```
 
 
-### Running the app locally
+### Running the app locally on your host or virtual machine
 
 As executed in a host or virtual machine, the app will use a virtual env instead of using system Python.
 Python 3.7 and pipenv are required in your system
@@ -106,7 +106,7 @@ $ cd app
 $ python util.py --ipv4 192.168.1.1 --ipv6 2001:db8:0:0:0::1 tests/test_files/intersection.log
 ```
 
-### Running the tests in your host or virtual machine
+### Running the tests locally on your host or virtual machine
 
 ```bash
 $ https://github.com/pedrolp85/homework.git
