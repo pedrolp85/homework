@@ -33,6 +33,13 @@ def test_valid_ipv4_4():
     print(result.stdout)
     assert "0.0.0.0" in result.stdout
 
+def test_valid_ipv4_5():
+    result = runner.invoke(app, ["tests/test_files/ipv4.log", "--ipv4", "3232236031"])
+    assert result.exit_code == 0
+    assert '192.168.1.255' in result.stdout
+    print(result.stdout)
+
+
 
 def test_invalid_ipv4_1():
     result = runner.invoke(
