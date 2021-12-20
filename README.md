@@ -37,57 +37,155 @@ The result (matching lines) is printed to standard output.
 ### Clone the repository
 
 ```bash
-git clone https://github.com/DenverCoder1/readme-typing-svg.git
-cd readme-typing-svg
+$ https://github.com/pedrolp85/homework.git
+$ cd homework
 ```
+
+
+### Running the app inside a container
+
+Before you can run it, docker engine and docker-compose must be installed.
+To run the App do the following:
+```bash
+$ docker-compose build util
+$ ./util.sh [OPTION]... [FILE]
+```
+Please Notice that if you provide a [FILE] argument in an absolute or relative path, it will look into the container filesystem
+if you want to test the app with a file on the host, provide the input with stdin
+Test files are provided in the path tests/test_files, you can leave there your own test files and rebuild the image so the new files
+will be con the container too
+
+
+Input file in container FileSystem:
+
+```bash
+$ ./util.sh --first 10 tests/test_files/intersection.log
+```
+
+Input file in container your host:
+
+```bash
+$ cat /etc/shadow | ./util.sh
+```
+
+Adding new files to the container
+
+```bash
+$ cp some_file.log app/tests/test_files/
+$ docker-compose build util
+$ ./util.sh --first 10 tests/test_files/some_file.log
+```
+
+### Running the tests inside the container
+
+Pytest is included in the package section of the Pipfile (instead of package-dev section as usual) justin case you want to run the test
+suite inside the container
+Another image is buid with another entrypoint that runs pytest and exits the container
+
+```bash
+docker-compose build tests
+./test.sh
+```
+
 
 ### Running the app locally
 
-```bash
-composer start
-```
-
-Open <http://localhost:8000/> and add parameters to run the project locally.
-
-### Running the tests
-
-Before you can run tests, PHPUnit must be installed. You can install it using Composer by running the following command.
+As executed in a host or virtual machine, the app will use a virtual env instead of using system Python.
+Python 3.7 and pipenv are required in your system
 
 ```bash
-composer install
+$ https://github.com/pedrolp85/homework.git
+$ cd homework
+$ pipenv lock
+$ pipenv install
+$ cd app
+$ python util.py --ipv4 192.168.1.1 --ipv6 2001:db8:0:0:0::1 tests/test_files/intersection.log
 ```
 
-Run the following command to run the PHPUnit test script which will verify that the tested functionality is still working.
+### Running the tests in your host or virtual machine
 
 ```bash
-composer test
+$ https://github.com/pedrolp85/homework.git
+$ cd homework
+$ pipenv lock
+$ pipenv install
+$ cd app
+$ pytest
 ```
-### Clone the repository
+
+
+
+## Some Cool Features
+==============================================================================
+
+Let's see some examples of what our app can do
+
+
+## --first *value* (-f *value*)
+
+Supports integer input to show the first *value* lines of the file or stdin
+
+* If int = 0, no output will be shown
+* if int < 0 , the output will be the same as --last abs(int)
+* Any input that is not an integer, will rise a **Value Error**
+
+## --last *value* (-l *value*)
+
+Supports integer input to show the last *value* lines of the file or stdin
+
+* If int = 0, no output will be shown
+* if int < 0 , the output will be the same as --first abs(int)
+* Any input that is not an integer, will rise a **Value Error**
+
+## --ipv4 *IPv4Adress* (-i *IPv4Adress*)
+
+Supports ipv4 address input to show the lines that contain that IP address ( matching IP addresses will be highlighted)
+
+* Support integer and dot-decimal IPv4 representation even if the text has different representation (does not act as a regex finder)
+* Any input that is not a valid ipv4 address, will rise a **Value Error**
+
+Example:
 
 ```bash
-git clone https://github.com/DenverCoder1/readme-typing-svg.git
-cd readme-typing-svg
+$ cat tests/test_files/intersection.log
+L1 172.16.0.1 
+L2 192.168.1.255 172.16.0.10 2001:db8:0::1
+
+$ ./util.sh --ipv4 3232236031 tests/test_files/intersection.log
+L2 *192.168.1.255* 172.16.0.10 2001:db8:0::1
+
 ```
 
-### Running the app locally
+## --ipv6 *IPv6Adress* (-I *IPv6Adress*)
+
+Supports ipv6 address input to show the lines that contain that IP address ( matching IP addresses will be highlighted)
+
+* Supports several IPv6 representations, and finds the IPv6 address even if the file has a differente representation
+* Any input that is not a valid ipv6 address, will rise a **Value Error**
 
 ```bash
-composer start
+$ cat tests/test_files/ipv6.log
+2001:db8:0:0:0::1
+2001:db8:0:0::1
+2001:db8:0::1
+2001:db8::1
+2001:db8:0:0:0::1 2001:db8:0:0::1 2001:db8:0::1 2001:db8::1
+
+$ ./util.sh --ipv6 2001:db8:0:0:0::1 tests/test_files/ipv6.log
+2001:db8:0:0:0::1
+2001:db8:0:0::1
+2001:db8:0::1
+2001:db8::1
+2001:db8:0:0:0::1 2001:db8:0:0::1 2001:db8:0::1 2001:db8::1
+
 ```
 
-Open <http://localhost:8000/> and add parameters to run the project locally.
+## --timestamps *HH:MM:SS* (-t *HH:MM:SS*)
 
-### Running the tests
+Supports a timedate input to search in log files
 
-Before you can run tests, PHPUnit must be installed. You can install it using Composer by running the following command.
+* The input must be zero padded to fill the format, any other input will rise **Value Error**
 
-```bash
-composer install
-```
+## no options
 
-Run the following command to run the PHPUnit test script which will verify that the tested functionality is still working.
-
-```bash
-composer test
-```
-
+The app will return the full file or stdin input
