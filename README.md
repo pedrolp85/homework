@@ -191,9 +191,12 @@ $ ./util.sh --ipv4 3232236031 tests/test_files/intersection.log
 ```
 Will obtain the following Output:
 
-### L2 <span style="background-color:green">192.168.1.255</span> 172.16.0.10 2001:db8:0::1
+#### L2 <span style="background-color:green">192.168.1.255</span> 172.16.0.10 2001:db8:0::1
 
-
+&nbsp;
+&nbsp;
+&nbsp;  
+  
 
 ## --ipv6 *IPv6Adress* (-I *IPv6Adress*)
 
@@ -222,12 +225,15 @@ $ ./util.sh --ipv6 2001:db8:0:0:0::1 tests/test_files/ipv6.log
 ```
 Will obtain the following Output:
 
-### L2 <span style="background-color:red">2001:db8:0:0:0::1</span>
-### L2 <span style="background-color:red">2001:db8:0:0::1</span>
-### L2 <span style="background-color:red">2001:db8:0::1</span>
-### L2 <span style="background-color:red">2001:db8::1</span>
-### L2 <span style="background-color:red">2001:db8:0:0:0::1</span> <span style="background-color:red">2001:db8:0:0::1</span> <span style="background-color:red">2001:db8:0::1</span> <span style="background-color:red">2001:db8::1</span>
+#### L2 <span style="background-color:red">2001:db8:0:0:0::1</span>
+#### L2 <span style="background-color:red">2001:db8:0:0::1</span>
+#### L2 <span style="background-color:red">2001:db8:0::1</span>
+#### L2 <span style="background-color:red">2001:db8::1</span>
+#### L2 <span style="background-color:red">2001:db8:0:0:0::1</span> <span style="background-color:red">2001:db8:0:0::1</span> <span style="background-color:red">2001:db8:0::1</span> <span style="background-color:red">2001:db8::1</span>
 
+&nbsp;
+&nbsp;
+&nbsp;  
 
 ## --timestamps *HH:MM:SS* (-t *HH:MM:SS*)
 
