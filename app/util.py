@@ -36,12 +36,18 @@ def validate_ipv6address(ip: str) -> ipaddress.IPv6Address:
 
 
 def validate_ipv4address(ip: str) -> ipaddress.IPv4Address:
-    if ip is not None:
-        try:
-            ip_address = ipaddress.IPv4Address(ip)
-        except ValueError:
-            raise typer.BadParameter("Only valid IPv4 addresess accepted")
-
+    if ip is not None:     
+        if not ip.isnumeric():
+            try:
+                ip_address = ipaddress.IPv4Address(ip)
+            except ValueError:
+                raise typer.BadParameter("Only valid IPv4 addresess accepted")
+        else:
+            try:
+                ip_address = ipaddress.IPv4Address(int(ip))
+            except ValueError:
+                raise typer.BadParameter("Only valid IPv4 addresess accepted")                
+        
         return ip_address
 
 
