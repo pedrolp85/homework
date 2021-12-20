@@ -189,3 +189,8 @@ Supports a timedate input to search in log files
 ## no options
 
 The app will return the full file or stdin input
+
+## [FILE]
+
+Supports both relative and absolute paths
+Relative paths will start in homework/app/

@@ -1,0 +1,45 @@
+Dec 12 17:15:16 python-test sshd[4287]: Accepted password for devops from172.16.0.102port 58466 ssh2
+Dec 12 17:15:16 python-test sshd[4287]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 12 17:15:31 python-test sshd[4291]: Received disconnect from 172.16.0.102 port 58466:11: disconnected by user
+Dec 12 17:15:31 python-test sshd[4291]: Disconnected from 172.16.0.102 port 58466
+Dec 12 17:15:31 python-test sshd[4287]: pam_unix(sshd:session): session closed for user devops
+Dec 12 17:15:39 python-test sshd[4594]: Accepted password for devops from 2001:DB8::1 port 62601 ssh2
+Dec 12 17:15:40 python-test sshd[4594]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 12 18:02:49 python-test sshd[6612]: Accepted password for devops from 172.16.0.102 port 64229 ssh2
+Dec 12 18:02:50 python-test sshd[6612]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 12 18:03:46 python-test sshd[6610]: Connection reset by 172.16.0.102 port 54929 [preauth]
+Dec 12 18:18:01 python-test sshd[4594]: pam_unix(sshd:session): 2001:DB8::1 closed for user devops
+Dec 12 19:15:43 python-test sshd[1810]: pam_unix(sshd:session): session closed for user devops
+Dec 12 19:23:19 python-test sshd[9287]: Accepted password for devops from 172.16.0.102 port 51811 ssh2
+Dec 12 19:23:19 python-test sshd[9287]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 12 19:24:12 python-test sshd[6616]: Received disconnect from 172.16.0.102 port 64229:11: disconnected by user
+Dec 12 19:24:12 python-test sshd[6616]: Disconnected from 172.16.0.102 port 64229
+Dec 12 19:24:12 python-test sshd[6612]: pam_unix(sshd:session): session closed for user devops
+Dec 13 03:41:48 python-test sshd[9287]: pam_unix(sshd:session): session closed for user devops
+Dec 13 08:26:25 python-test sshd[12780]: Accepted password for devops from 172.16.0.102 port 50286 ssh2
+Dec 13 08:26:25 python-test sshd[12780]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 13 08:27:54 python-test sshd[12784]: Received disconnect from 172.16.0.102 port 50286:11: disconnected by user
+Dec 13 08:27:54 python-test sshd[12784]: Disconnected from 172.16.0.102 port 50286
+Dec 13 08:27:54 python-test sshd[12780]: pam_unix(sshd:session): session closed for user devops
+Dec 14 10:48:49 python-test sshd[1424]: pam_unix(sshd:session): session closed for user devops
+Dec 14 12:36:48 python-test sshd[2811]: pam_unix(sshd:session): session closed for user devops
+Dec 16 10:11:09 python-test polkitd[762]: Loading rules from directory /etc/polkit-1/rules.d
+Dec 16 10:11:09 python-test polkitd[762]: Loading rules from directory /usr/share/polkit-1/rules.d
+Dec 16 10:11:09 python-test polkitd[762]: Finished loading, compiling and executing 2 rules
+Dec 16 10:11:09 python-test polkitd[762]: Acquired the name org.freedesktop.PolicyKit1 on the system bus
+Dec 16 10:11:13 python-test sshd[1140]: Server listening on 0.0.0.0 port 22.
+Dec 16 10:11:13 python-test sshd[1140]: Server listening on :: port 22.
+Dec 16 10:15:05 python-test sshd[8631]: Accepted password for devops from 172.16.0.101 port 60595 ssh2
+Dec 16 10:15:05 python-test sshd[8631]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 16 10:16:35 python-test sshd[9169]: Accepted password for devops from 172.16.0.101 port 62778 ssh2
+Dec 16 10:16:36 python-test sshd[9169]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 16 10:20:10 python-test sshd[9169]: pam_unix(sshd:session): session closed for user devops
+Dec 16 10:22:46 python-test sshd[9461]: Accepted password for devops from 172.16.0.101 port 57929 ssh2
+Dec 16 10:22:46 python-test sshd[9461]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 16 12:27:33 python-test sshd[11108]: Accepted password for devops from 172.16.0.101 port 64067 ssh2
+Dec 16 12:27:33 python-test sshd[11108]: pam_unix(sshd:session): session opened for user devops by (uid=0)
+Dec 16 19:39:11 python-test sudo:  devops : TTY=pts/8 ; PWD=/home/devops/nba_project ; USER=root ; COMMAND=/bin/cat /var/log/secure
+Dec 16 19:39:11 python-test sudo: pam_unix(sudo:session): session opened for user root by (uid=0)
+Dec 16 19:39:11 python-test sudo: pam_unix(sudo:session): session closed for user root
+Dec 16 19:39:53 python-test sudo:  devops : TTY=pts/8 ; PWD=/home/devops/nba_project ; USER=root ; COMMAND=/bin/cat /var/log/secure
+Dec 16 19:39:53 python-test sudo: pam_unix(sudo:session): session opened for user root by (uid=0)
