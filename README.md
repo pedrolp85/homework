@@ -37,7 +37,7 @@ The result (matching lines) is printed to standard output.
 ### Clone the repository
 
 ```bash
-$ https://github.com/pedrolp85/homework.git
+$ git clone https://github.com/pedrolp85/homework.git
 $ cd homework
 ```
 
@@ -101,6 +101,7 @@ $ https://github.com/pedrolp85/homework.git
 $ cd homework
 $ pipenv lock
 $ pipenv install
+$ pipenv shell
 $ cd app
 $ python util.py --ipv4 192.168.1.1 --ipv6 2001:db8:0:0:0::1 tests/test_files/intersection.log
 ```
@@ -112,6 +113,7 @@ $ https://github.com/pedrolp85/homework.git
 $ cd homework
 $ pipenv lock
 $ pipenv install
+$ pipenv shell
 $ cd app
 $ pytest
 ```
