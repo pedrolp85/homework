@@ -44,17 +44,20 @@ $ cd homework
 
 ### Running the app inside a container
 
+A docker-compose file is provided which buids 2 services, one for the prod app (util), an another one that runs Pytest inside the container (tests)
 Before you can run it, docker engine and docker-compose must be installed.
-To run the App do the following:
+
+
 ```bash
 $ docker-compose build util
 $ ./util.sh [OPTION]... [FILE]
 ```
-Please Notice that if you provide a [FILE] argument in an absolute or relative path, it will look into the container filesystem
+Please Notice that if you provide a [FILE] argument in an absolute or relative path, the App will look into the container filesystem
 if you want to test the app with a file on the host, provide the input with stdin
 Test files are provided in the path tests/test_files, you can leave there your own test files and rebuild the image so the new files
 will be con the container too
 
+Examples:
 
 Input file in container FileSystem:
 
@@ -62,7 +65,7 @@ Input file in container FileSystem:
 $ ./util.sh --first 10 tests/test_files/intersection.log
 ```
 
-Input file in container your host:
+Input file in your host or virtual Machine:
 
 ```bash
 $ cat /etc/shadow | ./util.sh
@@ -78,7 +81,7 @@ $ ./util.sh --first 10 tests/test_files/some_file.log
 
 ### Running the tests inside the container
 
-Pytest is included in the package section of the Pipfile (instead of package-dev section as usual) justin case you want to run the test
+Pytest is included in the package section of the Pipfile (instead of package-dev section as usual) just in case you want to run the test
 suite inside the container
 Another image is buid with another entrypoint that runs pytest and exits the container
 
@@ -194,3 +197,6 @@ The app will return the full file or stdin input
 
 Supports both relative and absolute paths
 Relative paths will start in homework/app/
+
+* Non-Existing files will rise a message (The File provided does not exist) and the app will exit with code 2 
+* Permission error will rise a message (Permission denied to operate the file) and the app will exit with code 2
